@@ -1,4 +1,4 @@
-package rxcache;
+package x.rxcache;
 
 import android.content.Context;
 import android.graphics.Bitmap;

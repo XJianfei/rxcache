@@ -1,4 +1,4 @@
-package rxcache;
+package x.rxcache;
 
 import rx.Observable;
 

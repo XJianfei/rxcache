@@ -14,8 +14,8 @@ import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.observables.ConnectableObservable;
-import rxcache.Data;
-import rxcache.RxImageLoader;
+import x.rxcache.Data;
+import x.rxcache.RxImageLoader;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RxImageLoader.init(this);
         final String url = "https://img1.doubanio.com/mpic/s28369978.jpg";
+        dbg("Go");
         ConnectableObservable<Data> co = RxImageLoader
             .getLoaderObservable(url);
         co.subscribe(new Observer<Data>() {

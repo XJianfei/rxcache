@@ -1,4 +1,4 @@
-package rxcache;
+package x.rxcache;
 
 import android.support.v4.util.LruCache;
 

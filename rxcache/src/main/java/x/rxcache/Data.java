@@ -1,4 +1,4 @@
-package rxcache;
+package x.rxcache;
 
 /**
  * Created by Peter on 16/4/22.
