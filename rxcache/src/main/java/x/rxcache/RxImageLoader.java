@@ -27,21 +27,22 @@ public class RxImageLoader {
      */
     public static ConnectableObservable<Data> getLoaderObservable(final String url) {
         Bitmap bitmap = getSync(url);
-        ConnectableObservable<Data> source = null;
+        ConnectableObservable<Data> source;
         if (bitmap != null) {
             source = Observable.just(new Data(bitmap, url)).publish();
         } else {
             source = XObservable
                 .addCaches(
+                    // 3 level
                     MemoryCacheObservable.create(url, 0),
-                    DiskBitmapCacheObservable.create(url, mContext),
+                    DiskBitmapCacheObservable.create(mContext, url, 0),
                     NetBitmapCacheObservable.create(url));
         }
         return source;
     }
 
     /**
-     * get Bitmap sync
+     * get Bitmap synchronized, will be null, because this just get bitmap from cache
      * @param url net url
      * @return Bitmap
      */
@@ -57,8 +58,19 @@ public class RxImageLoader {
             return bm;
         return null;
     }
-    public static final void loadImageToViewSync(final ImageView v, final String url) {
+
+    /**
+     * load image to view with synchronized, will be false, if image is not cache
+     * @param v
+     * @param url
+     * @return done or not
+     */
+    public static final boolean loadImageToViewSync(final ImageView v, final String url) {
+        Bitmap bitmap = getSync(url);
+        if (bitmap == null)
+            return false;
         v.setImageBitmap(getSync(url));
+        return true;
     }
 
     /**

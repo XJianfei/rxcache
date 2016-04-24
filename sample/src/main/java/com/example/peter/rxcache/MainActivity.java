@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         RxImageLoader.init(this);
         final String url = "https://img1.doubanio.com/mpic/s28369978.jpg";
         dbg("Go");
+        // RxJava way
         ConnectableObservable<Data> co = RxImageLoader
             .getLoaderObservable(url);
         co.subscribe(new Observer<Data>() {
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
                 dbg("image next");
             }
         });
+
+        // RxImageLoader.loadImageToView: asynchronous, can be called any thread
+        // observable just for timer
         Observable.timer(1, TimeUnit.SECONDS).subscribe(new Subscriber<Long>() {
             @Override
             public void onCompleted() {
@@ -88,10 +92,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNext(Long aLong) {
                 MainActivity.dbg("co2 connect");
-                co2.connect();
                 RxImageLoader.loadImageToView((ImageView) findViewById(R.id.iv3), url);
+
+                // ignore this
+                co2.connect();
             }
         });
+
+        // getSync way, RxImageLoader.getSync
+        // observable just for timer
         Observable.timer(1, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Subscriber<Long>() {
@@ -107,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onNext(Long aLong) {
+                    // actual code for getSync
                     ((ImageView)findViewById(R.id.iv4)).setImageBitmap(RxImageLoader.getSync(url));
                 }
             });
