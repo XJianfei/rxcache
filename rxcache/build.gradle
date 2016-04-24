@@ -29,7 +29,7 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
 
 }
-version = "0.3"
+version = "0.4"
 def siteUrl = 'https://github.com/XJianfei/rxcache'
 def gitUrl = 'https://github.com/XJianfei/rxcache.git'
 group = "x.rxcache"
